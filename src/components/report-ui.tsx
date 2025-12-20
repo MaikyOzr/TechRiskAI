@@ -29,7 +29,7 @@ const severityConfig: Record<
   high: {
     icon: ShieldAlert,
     label: 'High',
-    badgeClass: 'bg-destructive/10 text-destructive border-destructive/20',
+    badgeClass: 'bg-destructive text-destructive-foreground border-destructive/20',
   },
   medium: {
     icon: TriangleAlert,
@@ -46,6 +46,15 @@ const severityConfig: Record<
 export function SeverityBadge({ severity }: { severity: Severity }) {
   const config = severityConfig[severity] || severityConfig.low;
   const Icon = config.icon;
+
+  if (severity === 'high') {
+    return (
+        <Badge variant="destructive" className="flex shrink-0 items-center gap-1.5">
+            <Icon className="h-3.5 w-3.5" />
+            <span>{config.label}</span>
+        </Badge>
+    )
+  }
 
   return (
     <Badge

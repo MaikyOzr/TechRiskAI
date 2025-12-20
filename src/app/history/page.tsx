@@ -117,7 +117,7 @@ export default function HistoryPage() {
                     <TableCell className="w-[200px]">
                       <div className="flex items-center gap-2">
                         {counts.high > 0 && <Badge variant="destructive">H: {counts.high}</Badge>}
-                        {counts.medium > 0 && <Badge variant="default" className="bg-accent text-accent-foreground hover:bg-accent/80">M: {counts.medium}</Badge>}
+                        {counts.medium > 0 && <Badge variant="default" className="bg-yellow-500 text-black hover:bg-yellow-500/80 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-400/80">M: {counts.medium}</Badge>}
                         {counts.low > 0 && <Badge variant="secondary">L: {counts.low}</Badge>}
                       </div>
                     </TableCell>
