@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, BotMessageSquare } from 'lucide-react';
 import { analyzeAction } from '@/app/actions';
@@ -37,7 +37,7 @@ function SubmitButton() {
 
 export default function Home() {
   const router = useRouter();
-  const [state, formAction] = useFormState(analyzeAction, initialState);
+  const [state, formAction] = useActionState(analyzeAction, initialState);
   const { pending } = useFormStatus();
 
   useEffect(() => {
