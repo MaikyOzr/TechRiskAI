@@ -2,7 +2,11 @@
 
 TechRisk is a web application that leverages Generative AI to perform evidence-based audits of technical assets. Users can input any technical context—such as code snippets, log files, or architecture descriptions—and receive a comprehensive risk analysis report, an executive summary, and actionable recommendations.
 
-(<img width="1919" height="866" alt="image" src="https://github.com/user-attachments/assets/1b33bc5f-53ef-4aa3-be9e-4b72b97917ee" />)
+<img width="1919" height="866" alt="image" src="https://github.com/user-attachments/assets/1b33bc5f-53ef-4aa3-be9e-4b72b97917ee" />
+<img width="1880" height="588" alt="image" src="https://github.com/user-attachments/assets/c3a4fa53-e7bb-4476-820a-a2aef2d445c5" />
+<img width="1695" height="652" alt="image" src="https://github.com/user-attachments/assets/80a04748-21af-453d-9d59-049e03b5cbab" />
+<img width="1885" height="526" alt="image" src="https://github.com/user-attachments/assets/13f01af2-9a07-4735-839d-c8cc6f05139b" />
+
 
 ## Features
 
