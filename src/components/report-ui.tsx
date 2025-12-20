@@ -34,7 +34,7 @@ const severityConfig: Record<
   medium: {
     icon: TriangleAlert,
     label: 'Medium',
-    badgeClass: 'bg-accent/10 text-accent-foreground border-accent/20',
+    badgeClass: 'bg-accent text-accent-foreground border-accent/20',
   },
   low: {
     icon: Info,
