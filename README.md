@@ -2,7 +2,7 @@
 
 TechRisk is a web application that leverages Generative AI to perform evidence-based audits of technical assets. Users can input any technical context—such as code snippets, log files, or architecture descriptions—and receive a comprehensive risk analysis report, an executive summary, and actionable recommendations.
 
-![TechRisk Screenshot](https://placehold.co/600x400?text=TechRisk+App+Screenshot)
+![TechRisk Screenshot](<img width="1919" height="866" alt="image" src="https://github.com/user-attachments/assets/1b33bc5f-53ef-4aa3-be9e-4b72b97917ee" />)
 
 ## Features
 
