@@ -32,6 +32,12 @@ const nextConfig: NextConfig = {
   },
   // This is required for Electron to work with Next.js's static export.
   output: 'export',
+  // Disable generateStaticParams for dynamic routes
+  // This allows client-side rendering for dynamic routes in a static export
+  dynamic: 'error',
+  generateStaticParams: async () => {
+    return [];
+  },
 };
 
 export default nextConfig;
