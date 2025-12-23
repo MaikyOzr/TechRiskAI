@@ -60,14 +60,16 @@ async function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  const isDev = (await import('electron-is-dev')).default;
   // Handle AI analysis requests from the renderer process
   ipcMain.handle('perform-analysis', async (event, args) => {
     try {
       // We need to dynamically get the flow function.
-      const flowPath = isDev
-        ? path.join(__dirname, '../../out/ai/flows/perform-ai-risk-analysis.js')
-        : path.join(__dirname, '../ai/flows/perform-ai-risk-analysis.js');
+      // In dev mode, __dirname is .../src/electron, so we go up and into out.
+      // In prod mode, __dirname is .../out/electron, so we go up and into out.
+      const basePath = isDev ? path.join(__dirname, '../../') : path.join(__dirname, '../../');
+      const flowPath = path.join(basePath, 'out/ai/flows/perform-ai-risk-analysis.js');
       
       const { performAIRiskAnalysis } = require(flowPath);
       const result = await performAIRiskAnalysis(args);

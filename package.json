@@ -13,7 +13,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "electron:dev": "concurrently \"npm:dev\" \"wait-on http://localhost:9002 && electron .\"",
+    "electron:dev": "concurrently \"npm:dev\" \"npm run build:ai && wait-on http://localhost:9002 && electron .\"",
     "preelectron:pack": "npm run build",
     "electron:pack": "electron-builder --dir"
   },
