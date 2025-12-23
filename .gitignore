@@ -1,43 +1,42 @@
-# Dependencies
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-# Build outputs
-/dist
-/out
+# testing
+/coverage
+
+# next.js
 /.next/
+/out/
+
+# electron
+/dist/
+
+# production
 /build
 
-# Electron-builder specific
-/electron-builder-cache
-/electron-builder-debug.yml
+# misc
+.DS_Store
+*.pem
 
-# Logs
-logs
-*.log
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+.pnpm-debug.log*
 
-# OS-generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Misc
-.npm
-*.tsbuildinfo
-.eslintcache
-
-# Environment variables
-.env
+# local env files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
