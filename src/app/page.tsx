@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, BotMessageSquare } from 'lucide-react';
-import { analyzeAction } from '@/app/actions';
+import { performAIRiskAnalysis } from '@/ai/flows/perform-ai-risk-analysis';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -16,50 +15,60 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { LoadingAnalysis } from '@/components/loading-analysis';
-import type { AnalysisReport } from '@/lib/types';
 
-const initialState: {
-  data: AnalysisReport | null;
-  error: string | null;
-} = {
-  data: null,
-  error: null,
-};
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
+function SubmitButton({ isPending }: { isPending: boolean }) {
   return (
-    <Button type="submit" disabled={pending} size="lg" className="w-full">
-      {pending ? 'Analyzing...' : 'Generate Report'}
+    <Button type="submit" disabled={isPending} size="lg" className="w-full">
+      {isPending ? 'Analyzing...' : 'Generate Report'}
     </Button>
   );
 }
 
 export default function Home() {
   const router = useRouter();
-  const [state, formAction] = useActionState(analyzeAction, initialState);
-  const { pending } = useFormStatus();
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (state.data) {
-      const id = Date.now().toString();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    const formData = new FormData(event.currentTarget);
+    const technicalContext = formData.get('technicalContext') as string;
+
+    if (!technicalContext || technicalContext.trim().length < 50) {
+      setError(
+        'Please provide sufficient technical context (at least 50 characters).'
+      );
+      return;
+    }
+
+    startTransition(async () => {
       try {
+        const result = await performAIRiskAnalysis({ technicalContext });
+        if (!result || !result.riskReport || !result.executiveSummary) {
+          throw new Error('Invalid response from AI model.');
+        }
+
+        const id = Date.now().toString();
         const history = JSON.parse(
           localStorage.getItem('techrisk_history') || '{}'
         );
         history[id] = {
-          data: state.data,
+          data: result,
           timestamp: Date.now(),
         };
         localStorage.setItem('techrisk_history', JSON.stringify(history));
         router.push(`/report?id=${id}`);
-      } catch (error) {
-        console.error('Failed to save to localStorage', error);
+      } catch (e) {
+        console.error(e);
+        setError(
+          'An error occurred during analysis. The AI model may be unavailable. Please try again later.'
+        );
       }
-    }
-  }, [state.data, router]);
+    });
+  };
 
-  if (pending) {
+  if (isPending) {
     return <LoadingAnalysis />;
   }
 
@@ -80,23 +89,24 @@ export default function Home() {
           </div>
         </CardHeader>
         <CardContent>
-          <form action={formAction} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid w-full gap-2">
               <Textarea
                 name="technicalContext"
                 placeholder="Paste code snippets, logs, architecture notes, or other technical context here..."
                 className="min-h-80"
                 required
+                disabled={isPending}
               />
             </div>
-            {state.error && (
+            {error && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{state.error}</AlertDescription>
+                <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            <SubmitButton />
+            <SubmitButton isPending={isPending} />
           </form>
         </CardContent>
       </Card>
