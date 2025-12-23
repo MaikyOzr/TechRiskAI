@@ -15,6 +15,6 @@
     },
     "baseUrl": "."
   },
-  "include": ["src/ai/**/*.ts", "src/electron/main.js", "src/electron/preload.js"],
+  "include": ["src/ai/**/*.ts", "src/electron/**/*.js"],
   "exclude": ["node_modules"]
 }
