@@ -5,7 +5,6 @@
  * - GenerateActionableRecommendationsInput - The input type for the generateActionableRecommendations function.
  * - GenerateActionableRecommendationsOutput - The return type for the generateActionableRecommendations function.
  */
-'use server';
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
