@@ -52,7 +52,7 @@ export default function Home() {
           timestamp: Date.now(),
         };
         localStorage.setItem('techrisk_history', JSON.stringify(history));
-        router.push(`/report/${id}`);
+        router.push(`/report?id=${id}`);
       } catch (error) {
         console.error('Failed to save to localStorage', error);
       }
