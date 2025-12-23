@@ -40,11 +40,17 @@ const nextConfig: NextConfig = {
             ...config.resolve.fallback,
             'async_hooks': false,
             'child_process': false,
+            'dgram': false,
             'dns': false,
             'fs': false,
             'net': false,
             'tls': false,
             'http2': false,
+            'os': false,
+            'path': false,
+            'stream': false,
+            'zlib': false,
+            'crypto': false,
         };
     }
     return config;
