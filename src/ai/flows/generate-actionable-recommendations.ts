@@ -5,8 +5,8 @@
  * - GenerateActionableRecommendationsInput - The input type for the generateActionableRecommendations function.
  * - GenerateActionableRecommendationsOutput - The return type for the generateActionableRecommendations function.
  */
-const {ai} = require('@/ai/genkit');
-const {z} = require('genkit');
+import { z } from 'zod';
+import { ai } from '@/ai/genkit';
 
 const GenerateActionableRecommendationsInputSchema = z.object({
   riskReport: z.string().describe('The structured risk report from the AI analysis.'),

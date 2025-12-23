@@ -72,31 +72,18 @@ export default function Home() {
     }
 
     startTransition(async () => {
-      try {
-        // Check if running in Electron
-        if (window.electronAPI) {
-          console.log('Running in Electron, using electronAPI');
-          const response = await window.electronAPI.performAnalysis({
-            technicalContext,
-          });
-          if (response.success && response.data) {
-            handleAnalysisResult(response.data);
-          } else {
-            throw new Error(response.error || 'An unknown error occurred in the Electron main process.');
-          }
-        } else {
-          // Running in web, use server action
-          console.log('Running in Web, using server action');
-          const result = await analyzeAction({ technicalContext });
-          handleAnalysisResult(result);
-        }
-      } catch (e: any) {
-        console.error(e);
-        setError(
-          e.message || 'An error occurred during analysis. The AI model may be unavailable. Please try again later.'
-        );
-      }
-    });
+  try {
+    // ALWAYS use Next.js server action
+    const result = await analyzeAction({ technicalContext });
+    handleAnalysisResult(result);
+  } catch (e: any) {
+    console.error(e);
+    setError(
+      e.message ||
+        'An error occurred during analysis. The AI model may be unavailable. Please try again later.'
+    );
+  }
+});
   };
 
   if (isPending) {

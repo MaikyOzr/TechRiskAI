@@ -13,7 +13,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "electron:dev": "concurrently \"npm:dev\" \"wait-on http://localhost:9002 && electron --require ts-node/register src/electron/main.js\"",
+    "electron:dev": "concurrently \"npm:dev\" \"wait-on http://localhost:9002 && electron src/electron/main.js\"",
     "preelectron:pack": "npm run build",
     "electron:pack": "electron-builder --dir"
   },

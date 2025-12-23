@@ -5,8 +5,8 @@
  * - PerformAIRiskAnalysisInput - The input type for the performAIRiskAnalysis function.
  * - PerformAIRiskAnalysisOutput - The return type for the performAIRiskAnalysis function.
  */
-const {ai} = require('@/ai/genkit');
-const {z} = require('genkit');
+import { z } from 'zod';
+import { ai } from '@/ai/genkit';
 
 const PerformAIRiskAnalysisInputSchema = z.object({
   technicalContext: z

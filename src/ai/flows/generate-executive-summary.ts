@@ -5,8 +5,8 @@
  * - GenerateExecutiveSummaryInput - The input type for the generateExecutiveSummary function.
  * - GenerateExecutiveSummaryOutput - The return type for the generateExecutiveSummary function.
  */
-const {ai} = require('@/ai/genkit');
-const {z} = require('genkit');
+import { z } from 'zod';
+import { ai } from '@/ai/genkit';
 
 const GenerateExecutiveSummaryInputSchema = z.object({
   riskAnalysis: z
