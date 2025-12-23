@@ -30,6 +30,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // This is required for Electron to work with Next.js's static export.
+  output: 'export',
 };
 
 export default nextConfig;
