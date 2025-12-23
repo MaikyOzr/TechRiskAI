@@ -9,24 +9,33 @@ const flowNames = [
   'generate-actionable-recommendations',
 ];
 
-flowNames.forEach(flowName => {
-  try {
-    const flowPath = path.join(__dirname, `../out/ai/flows/${flowName}.js`);
-    require(flowPath);
-  } catch (error) {
-    console.warn(`Could not load AI flow: ${flowName}.js. Ensure it has been built correctly.`);
-  }
-});
-
-
 async function createWindow() {
   const isDev = (await import('electron-is-dev')).default;
+  
+  // In dev mode, we need to load from the 'src' directory,
+  // but in production, it will be in the 'out' directory.
+  const flowDir = isDev
+    ? path.join(__dirname, '../ai/flows')
+    : path.join(__dirname, 'ai/flows');
+  
+  const outDir = isDev ? 'src' : 'out';
+
+  flowNames.forEach(flowName => {
+    try {
+      const flowPath = path.join(__dirname, `../${outDir}/ai/flows/${flowName}.js`);
+      require(flowPath);
+    } catch (error) {
+      console.warn(`Could not load AI flow: ${flowName}.js. Ensure it has been built correctly.`, error);
+    }
+  });
+
+
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, '../electron/preload.js'),
       // It's important to consider the security implications of these settings.
       // nodeIntegration and contextIsolation are important for security.
       nodeIntegration: false,
@@ -56,8 +65,10 @@ app.whenReady().then(() => {
   // Handle AI analysis requests from the renderer process
   ipcMain.handle('perform-analysis', async (event, args) => {
     try {
+      const isDev = (await import('electron-is-dev')).default;
+      const outDir = isDev ? 'src' : 'out';
       // We need to dynamically get the flow function.
-      const { performAIRiskAnalysis } = require(path.join(__dirname, '../out/ai/flows/perform-ai-risk-analysis.js'));
+      const { performAIRiskAnalysis } = require(path.join(__dirname, `../${outDir}/ai/flows/perform-ai-risk-analysis.js`));
       const result = await performAIRiskAnalysis(args);
       return { success: true, data: result };
     } catch (error) {
