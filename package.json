@@ -8,7 +8,11 @@
     "dev": "next dev --turbopack -p 9002",
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
+<<<<<<< HEAD
     "build": "cross-env NODE_ENV=production next build",
+=======
+    "build": "cross-env NODE_ENV=production next build && tsc --project tsconfig.server.json",
+>>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",

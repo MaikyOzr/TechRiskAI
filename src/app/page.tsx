@@ -3,7 +3,10 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, BotMessageSquare } from 'lucide-react';
+<<<<<<< HEAD
 import { performAIRiskAnalysis } from '@/ai/flows/perform-ai-risk-analysis';
+=======
+>>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -16,6 +19,20 @@ import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { LoadingAnalysis } from '@/components/loading-analysis';
 
+<<<<<<< HEAD
+=======
+// Define the shape of the electronAPI on the window object
+declare global {
+  interface Window {
+    electronAPI: {
+      performAnalysis: (args: {
+        technicalContext: string;
+      }) => Promise<{ success: boolean; data?: any; error?: string }>;
+    };
+  }
+}
+
+>>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
 function SubmitButton({ isPending }: { isPending: boolean }) {
   return (
     <Button type="submit" disabled={isPending} size="lg" className="w-full">
@@ -42,11 +59,33 @@ export default function Home() {
       return;
     }
 
+<<<<<<< HEAD
     startTransition(async () => {
       try {
         const result = await performAIRiskAnalysis({ technicalContext });
         if (!result || !result.riskReport || !result.executiveSummary) {
           throw new Error('Invalid response from AI model.');
+=======
+    // Check if the Electron API is available
+    if (!window.electronAPI) {
+      setError(
+        'This feature is only available in the Electron application.'
+      );
+      return;
+    }
+
+    startTransition(async () => {
+      try {
+        const response = await window.electronAPI.performAnalysis({ technicalContext });
+        
+        if (!response.success || !response.data) {
+          throw new Error(response.error || 'Invalid response from AI model.');
+        }
+
+        const result = response.data;
+        if (!result || !result.riskReport || !result.executiveSummary) {
+          throw new Error('Invalid data structure in AI response.');
+>>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
         }
 
         const id = Date.now().toString();
@@ -59,10 +98,17 @@ export default function Home() {
         };
         localStorage.setItem('techrisk_history', JSON.stringify(history));
         router.push(`/report?id=${id}`);
+<<<<<<< HEAD
       } catch (e) {
         console.error(e);
         setError(
           'An error occurred during analysis. The AI model may be unavailable. Please try again later.'
+=======
+      } catch (e: any) {
+        console.error(e);
+        setError(
+          e.message || 'An error occurred during analysis. The AI model may be unavailable. Please try again later.'
+>>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
         );
       }
     });
