@@ -34,6 +34,9 @@ import {
   BenefitItem,
 } from '@/components/report-ui';
 
+export const dynamicParams = false;
+export const generateStaticParams = () => [];
+
 export default function ReportPage() {
   const params = useParams();
   const id = params.id as string;
