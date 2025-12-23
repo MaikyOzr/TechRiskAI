@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "out/ai",
+    "rootDir": "src/ai"
+  },
+  "include": ["src/ai/**/*.ts"]
+}
