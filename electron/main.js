@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { performAIRiskAnalysis } = require('../out/ai/flows/perform-ai-risk-analysis.js');
 
 async function createWindow() {
   const isDev = (await import('electron-is-dev')).default;
@@ -35,6 +36,17 @@ async function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  // Handle AI analysis requests from the renderer process
+  ipcMain.handle('perform-analysis', async (event, args) => {
+    try {
+      const result = await performAIRiskAnalysis(args);
+      return { success: true, data: result };
+    } catch (error) {
+      console.error('AI Analysis Error:', error);
+      return { success: false, error: error.message };
+    }
+  });
+  
   createWindow();
 
   app.on('activate', function () {
