@@ -1,8 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const isDev = require('electron-is-dev');
 
-function createWindow() {
+async function createWindow() {
+  const isDev = (await import('electron-is-dev')).default;
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
