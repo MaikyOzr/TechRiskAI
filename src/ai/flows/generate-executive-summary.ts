@@ -5,7 +5,6 @@
  * - GenerateExecutiveSummaryInput - The input type for the generateExecutiveSummary function.
  * - GenerateExecutiveSummaryOutput - The return type for the generateExecutiveSummary function.
  */
-'use server';
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 

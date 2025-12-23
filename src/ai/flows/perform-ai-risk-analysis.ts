@@ -5,7 +5,6 @@
  * - PerformAIRiskAnalysisInput - The input type for the performAIRiskAnalysis function.
  * - PerformAIRiskAnalysisOutput - The return type for the performAIRiskAnalysis function.
  */
-'use server';
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
