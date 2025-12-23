@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 'use server';
->>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
 /**
  * @fileOverview This file defines a Genkit flow for performing AI-powered risk analysis on technical input.
  *

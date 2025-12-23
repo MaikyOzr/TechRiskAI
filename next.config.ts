@@ -38,7 +38,6 @@ const nextConfig: NextConfig = {
     if (!isServer) {
         config.resolve.fallback = {
             ...config.resolve.fallback,
-<<<<<<< HEAD
             'async_hooks': false,
             'child_process': false,
             'dgram': false,
@@ -52,8 +51,6 @@ const nextConfig: NextConfig = {
             'stream': false,
             'zlib': false,
             'crypto': false,
-=======
->>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
         };
     }
     return config;

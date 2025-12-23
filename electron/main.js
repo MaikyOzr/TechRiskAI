@@ -1,19 +1,13 @@
-<<<<<<< HEAD
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
-
-=======
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 // Import the compiled AI flows.
 // Note: We are importing from the 'out' directory which is the result of the build process.
-const { performAIRiskAnalysis } = require('../out/ai/flows/perform-ai-risk-analysis.js');
+require('../out/ai/flows/perform-ai-risk-analysis.js');
 require('../out/ai/flows/generate-executive-summary.js');
 require('../out/ai/flows/generate-actionable-recommendations.js');
 
 
->>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
 async function createWindow() {
   const isDev = (await import('electron-is-dev')).default;
   // Create the browser window.
@@ -48,11 +42,12 @@ async function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-<<<<<<< HEAD
-=======
   // Handle AI analysis requests from the renderer process
   ipcMain.handle('perform-analysis', async (event, args) => {
     try {
+      // Since we required the flows at the top, the 'performAIRiskAnalysisFlow' is available.
+      // We need to dynamically get the flow function.
+      const { performAIRiskAnalysis } = require('../out/ai/flows/perform-ai-risk-analysis.js');
       const result = await performAIRiskAnalysis(args);
       return { success: true, data: result };
     } catch (error) {
@@ -61,7 +56,6 @@ app.whenReady().then(() => {
     }
   });
   
->>>>>>> 13d50e6d2bf4d688a5d1d0c5331c62b69adc4f70
   createWindow();
 
   app.on('activate', function () {
