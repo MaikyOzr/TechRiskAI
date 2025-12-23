@@ -3,15 +3,19 @@
     "target": "ES2020",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "outDir": "out/electron",
+    "outDir": "out",
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["esnext"],
-    "allowJs": true
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "baseUrl": "."
   },
-  "include": ["src/electron/main.js", "src/electron/preload.js"],
+  "include": ["src/ai/**/*.ts", "src/electron/main.js", "src/electron/preload.js"],
   "exclude": ["node_modules"]
 }
