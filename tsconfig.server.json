@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "out/ai",
+    "rootDir": "src/ai",
+    "noEmit": false,
+    "jsx": "react"
+  },
+  "include": ["src/ai/**/*.ts"],
+  "exclude": ["node_modules"]
+}

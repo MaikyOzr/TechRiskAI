@@ -1,6 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+
+// Import the compiled AI flows.
+// Note: We are importing from the 'out' directory which is the result of the build process.
 const { performAIRiskAnalysis } = require('../out/ai/flows/perform-ai-risk-analysis.js');
+require('../out/ai/flows/generate-executive-summary.js');
+require('../out/ai/flows/generate-actionable-recommendations.js');
+
 
 async function createWindow() {
   const isDev = (await import('electron-is-dev')).default;
