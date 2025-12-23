@@ -40,10 +40,17 @@ const nextConfig: NextConfig = {
             ...config.resolve.fallback,
             'fs/promises': false,
             fs: false,
+            // These are Node.js modules that are not available in the browser.
+            // We are providing empty fallbacks to prevent webpack from trying to bundle them.
+            'async_hooks': false,
+            'child_process': false,
+            'http2': false,
+            'net': false,
+            'tls': false,
         };
     }
     config.module.rules.push({
-        test: /report\/page\.tsx$/,
+        test: /report\/\[id\]\/page\.tsx$/,
         loader: 'string-replace-loader',
         options: {
             search: 'export const dynamicParams = true;',

@@ -1,5 +1,3 @@
-'use server';
-
 /**
  * @fileOverview This file defines a Genkit flow for performing AI-powered risk analysis on technical input.
  *

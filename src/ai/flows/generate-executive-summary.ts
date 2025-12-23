@@ -1,5 +1,3 @@
-'use server';
-
 /**
  * @fileOverview A flow to generate an executive summary of a risk analysis.
  *
