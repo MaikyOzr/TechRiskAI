@@ -7,13 +7,12 @@
   "scripts": {
     "dev": "next dev --turbopack -p 9002",
     "build:next": "cross-env NODE_ENV=production next build",
-    "build:ai": "tsc --project tsconfig.server.json",
-    "build:electron": "tsc --project tsconfig.electron.json",
-    "build": "npm run build:ai && npm run build:electron && npm run build:next",
+    "build:server": "tsc --project tsconfig.server.json",
+    "build": "npm run build:server && npm run build:next",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "electron:dev": "npm run build:ai && npm run build:electron && concurrently \"npm:dev\" \"wait-on http://localhost:9002 && electron .\"",
+    "electron:dev": "npm run build:server && concurrently \"npm:dev\" \"wait-on http://localhost:9002 && electron .\"",
     "preelectron:pack": "npm run build",
     "electron:pack": "electron-builder --dir"
   },
