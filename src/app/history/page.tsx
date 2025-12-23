@@ -116,14 +116,14 @@ export default function HistoryPage() {
                     </TableCell>
                     <TableCell className="w-[200px]">
                       <div className="flex items-center gap-2">
-                        {counts.high > 0 && <Badge variant="destructive">H: {counts.high}</Badge>}
-                        {counts.medium > 0 && <Badge variant="default" className="bg-yellow-500 text-black hover:bg-yellow-500/80 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-400/80">M: {counts.medium}</Badge>}
+                        {counts.high > 0 && <Badge variant="destructive" className="border-red-500/50 bg-red-500/20 text-red-100 hover:bg-red-500/30">H: {counts.high}</Badge>}
+                        {counts.medium > 0 && <Badge variant="default" className="border-amber-500/50 bg-amber-500/20 text-amber-100 hover:bg-amber-500/30">M: {counts.medium}</Badge>}
                         {counts.low > 0 && <Badge variant="secondary">L: {counts.low}</Badge>}
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
                       <Button variant="ghost" size="icon" asChild>
-                        <Link href={`/report/${id}`} title="View Report">
+                        <Link href={`/report?id=${id}`} title="View Report">
                           <Eye className="h-4 w-4" />
                         </Link>
                       </Button>
