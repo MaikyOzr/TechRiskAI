@@ -4,17 +4,23 @@ const isDev = require('electron-is-dev');
 
 let performAIRiskAnalysis;
 
-// In both dev and prod, we now rely on the compiled JS file from the 'out' directory.
-// The build process ensures this file exists before Electron starts.
-const flowPath = isDev
-  ? path.join(app.getAppPath(), 'out', 'ai', 'flows', 'perform-ai-risk-analysis.js')
-  : path.join(process.resourcesPath, 'app.asar', 'out', 'ai', 'flows', 'perform-ai-risk-analysis.js');
-
-try {
-  performAIRiskAnalysis = require(flowPath).performAIRiskAnalysis;
-} catch (e) {
-  console.error(`Failed to load performAIRiskAnalysis from: ${flowPath}`, e);
-  // We don't quit here, to allow the window to open and show an error if needed.
+// In dev mode, we use ts-node to require the TS file directly.
+// In prod, we require the compiled JS file from the asar package.
+if (isDev) {
+  try {
+    // This will be handled by the --require ts-node/register flag
+    performAIRiskAnalysis = require('../ai/flows/perform-ai-risk-analysis.ts').performAIRiskAnalysis;
+  } catch (e) {
+    console.error('Failed to load performAIRiskAnalysis in dev mode.', e);
+  }
+} else {
+  // Production mode
+  try {
+    const flowPath = path.join(process.resourcesPath, 'app.asar', 'out', 'ai', 'flows', 'perform-ai-risk-analysis.js');
+    performAIRiskAnalysis = require(flowPath).performAIRiskAnalysis;
+  } catch(e) {
+     console.error('Failed to load performAIRiskAnalysis in prod mode.', e);
+  }
 }
 
 
@@ -23,7 +29,6 @@ async function createWindow() {
     width: 1200,
     height: 800,
     webPreferences: {
-      // The preload script is always located relative to the main.js file
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
@@ -44,7 +49,7 @@ async function createWindow() {
 app.whenReady().then(() => {
   ipcMain.handle('perform-analysis', async (event, args) => {
     if (!performAIRiskAnalysis) {
-      const errorMsg = 'AI analysis function is not loaded. Check build process.';
+      const errorMsg = 'AI analysis function is not loaded. Check build process or dev setup.';
       console.error(errorMsg);
       return { success: false, error: errorMsg };
     }

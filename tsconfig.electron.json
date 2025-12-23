@@ -1,16 +1,4 @@
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "outDir": "out/electron",
-    "rootDir": "src/electron",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["esnext"]
-  },
-  "include": ["src/electron/**/*.js"],
-  "exclude": ["node_modules"]
-}
+// THIS FILE IS INTENTIONALLY LEFT BLANK AND IS NOT USED.
+// IT IS A PLACEHOLDER TO PREVENT BUILD ERRORS FROM MISSING FILES.
+// We are using ts-node for development and a separate build step for production.
+{}
