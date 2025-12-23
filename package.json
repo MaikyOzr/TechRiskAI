@@ -2,12 +2,10 @@
   "name": "techrisk-electron",
   "version": "0.1.0",
   "private": true,
-  "main": "electron/main.js",
+  "main": "out/electron/main.js",
   "homepage": "./",
   "scripts": {
     "dev": "next dev --turbopack -p 9002",
-    "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
-    "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
     "build": "cross-env NODE_ENV=production next build && tsc --project tsconfig.server.json",
     "start": "next start",
     "lint": "next lint",
@@ -80,7 +78,6 @@
     "appId": "com.techrisk.app",
     "productName": "TechRisk",
     "files": [
-      "electron/**/*",
       "out/**/*",
       "package.json"
     ],

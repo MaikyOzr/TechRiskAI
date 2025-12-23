@@ -1,11 +1,22 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
-// Import the compiled AI flows.
-// Note: We are importing from the 'out' directory which is the result of the build process.
-require('../out/ai/flows/perform-ai-risk-analysis.js');
-require('../out/ai/flows/generate-executive-summary.js');
-require('../out/ai/flows/generate-actionable-recommendations.js');
+// Dynamically require the AI flows using absolute paths.
+// This is more robust for the Electron environment.
+const flowNames = [
+  'perform-ai-risk-analysis',
+  'generate-executive-summary',
+  'generate-actionable-recommendations',
+];
+
+flowNames.forEach(flowName => {
+  try {
+    const flowPath = path.join(__dirname, `../out/ai/flows/${flowName}.js`);
+    require(flowPath);
+  } catch (error) {
+    console.warn(`Could not load AI flow: ${flowName}.js. Ensure it has been built correctly.`);
+  }
+});
 
 
 async function createWindow() {
@@ -45,9 +56,8 @@ app.whenReady().then(() => {
   // Handle AI analysis requests from the renderer process
   ipcMain.handle('perform-analysis', async (event, args) => {
     try {
-      // Since we required the flows at the top, the 'performAIRiskAnalysisFlow' is available.
       // We need to dynamically get the flow function.
-      const { performAIRiskAnalysis } = require('../out/ai/flows/perform-ai-risk-analysis.js');
+      const { performAIRiskAnalysis } = require(path.join(__dirname, '../out/ai/flows/perform-ai-risk-analysis.js'));
       const result = await performAIRiskAnalysis(args);
       return { success: true, data: result };
     } catch (error) {

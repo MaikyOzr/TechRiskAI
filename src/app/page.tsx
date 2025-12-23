@@ -15,6 +15,18 @@ import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { LoadingAnalysis } from '@/components/loading-analysis';
 import { analyzeAction } from './actions';
+import type { PerformAIRiskAnalysisOutput } from '@/ai/flows/perform-ai-risk-analysis';
+
+// Extend the window interface to include the electronAPI
+declare global {
+  interface Window {
+    electronAPI?: {
+      performAnalysis: (args: {
+        technicalContext: string;
+      }) => Promise<{ success: boolean; data?: PerformAIRiskAnalysisOutput; error?: string }>;
+    };
+  }
+}
 
 function SubmitButton({ isPending }: { isPending: boolean }) {
   return (
@@ -28,6 +40,23 @@ export default function Home() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+
+  const handleAnalysisResult = (result: PerformAIRiskAnalysisOutput) => {
+    if (!result || !result.riskReport || !result.executiveSummary) {
+      throw new Error('Invalid response from AI model.');
+    }
+
+    const id = Date.now().toString();
+    const history = JSON.parse(
+      localStorage.getItem('techrisk_history') || '{}'
+    );
+    history[id] = {
+      data: result,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem('techrisk_history', JSON.stringify(history));
+    router.push(`/report?id=${id}`);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,21 +73,23 @@ export default function Home() {
 
     startTransition(async () => {
       try {
-        const result = await analyzeAction({ technicalContext });
-        if (!result || !result.riskReport || !result.executiveSummary) {
-          throw new Error('Invalid response from AI model.');
+        // Check if running in Electron
+        if (window.electronAPI) {
+          console.log('Running in Electron, using electronAPI');
+          const response = await window.electronAPI.performAnalysis({
+            technicalContext,
+          });
+          if (response.success && response.data) {
+            handleAnalysisResult(response.data);
+          } else {
+            throw new Error(response.error || 'An unknown error occurred in the Electron main process.');
+          }
+        } else {
+          // Running in web, use server action
+          console.log('Running in Web, using server action');
+          const result = await analyzeAction({ technicalContext });
+          handleAnalysisResult(result);
         }
-
-        const id = Date.now().toString();
-        const history = JSON.parse(
-          localStorage.getItem('techrisk_history') || '{}'
-        );
-        history[id] = {
-          data: result,
-          timestamp: Date.now(),
-        };
-        localStorage.setItem('techrisk_history', JSON.stringify(history));
-        router.push(`/report?id=${id}`);
       } catch (e: any) {
         console.error(e);
         setError(
