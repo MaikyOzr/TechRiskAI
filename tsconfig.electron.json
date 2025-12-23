@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "out/electron",
+    "rootDir": "src/electron",
+    "noEmit": false,
+    "jsx": "react"
+  },
+  "include": ["src/electron/**/*.js"],
+  "exclude": ["node_modules"]
+}
