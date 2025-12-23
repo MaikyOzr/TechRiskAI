@@ -10,6 +10,6 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["esnext"]
   },
-  "include": ["src/electron/**/*.js", "src/electron/**/*.ts"],
+  "include": ["src/electron/**/*.js"],
   "exclude": ["node_modules"]
 }

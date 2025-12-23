@@ -3,19 +3,18 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 
 let performAIRiskAnalysis;
-if (isDev) {
-  // In development, require the compiled JS file from the 'out' directory.
-  // This assumes you've run 'npm run build:ai' as part of the dev script.
-  try {
-    performAIRiskAnalysis = require(path.join(app.getAppPath(), 'out', 'ai', 'flows', 'perform-ai-risk-analysis.js')).performAIRiskAnalysis;
-  } catch (e) {
-    console.error('Failed to load performAIRiskAnalysis in dev mode.', e);
-    // Exit gracefully if the file isn't there, as the app can't function.
-    app.quit();
-  }
-} else {
-  // In production, require the file from the asar archive.
-  performAIRiskAnalysis = require(path.join(process.resourcesPath, 'app.asar', 'out', 'ai', 'flows', 'perform-ai-risk-analysis.js')).performAIRiskAnalysis;
+
+// In both dev and prod, we now rely on the compiled JS file from the 'out' directory.
+// The build process ensures this file exists before Electron starts.
+const flowPath = isDev
+  ? path.join(app.getAppPath(), 'out', 'ai', 'flows', 'perform-ai-risk-analysis.js')
+  : path.join(process.resourcesPath, 'app.asar', 'out', 'ai', 'flows', 'perform-ai-risk-analysis.js');
+
+try {
+  performAIRiskAnalysis = require(flowPath).performAIRiskAnalysis;
+} catch (e) {
+  console.error(`Failed to load performAIRiskAnalysis from: ${flowPath}`, e);
+  // We don't quit here, to allow the window to open and show an error if needed.
 }
 
 
@@ -24,6 +23,7 @@ async function createWindow() {
     width: 1200,
     height: 800,
     webPreferences: {
+      // The preload script is always located relative to the main.js file
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
@@ -32,7 +32,7 @@ async function createWindow() {
 
   const startUrl = isDev
     ? 'http://localhost:9002'
-    : `file://${path.join(__dirname, '../../index.html')}`;
+    : `file://${path.join(__dirname, '..', '..', 'index.html')}`;
   
   mainWindow.loadURL(startUrl);
 
@@ -44,7 +44,7 @@ async function createWindow() {
 app.whenReady().then(() => {
   ipcMain.handle('perform-analysis', async (event, args) => {
     if (!performAIRiskAnalysis) {
-      const errorMsg = 'AI analysis function is not loaded.';
+      const errorMsg = 'AI analysis function is not loaded. Check build process.';
       console.error(errorMsg);
       return { success: false, error: errorMsg };
     }
