@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, BotMessageSquare } from 'lucide-react';
-import { performAIRiskAnalysis } from '@/ai/flows/perform-ai-risk-analysis';
+import { analyzeAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -44,7 +44,7 @@ export default function Home() {
 
     startTransition(async () => {
       try {
-        const result = await performAIRiskAnalysis({ technicalContext });
+        const result = await analyzeAction({ technicalContext });
         if (!result || !result.riskReport || !result.executiveSummary) {
           throw new Error('Invalid response from AI model.');
         }

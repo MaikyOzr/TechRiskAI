@@ -38,15 +38,6 @@ const nextConfig: NextConfig = {
     if (!isServer) {
         config.resolve.fallback = {
             ...config.resolve.fallback,
-            'fs/promises': false,
-            fs: false,
-            // These are Node.js modules that are not available in the browser.
-            // We are providing empty fallbacks to prevent webpack from trying to bundle them.
-            'async_hooks': false,
-            'child_process': false,
-            'http2': false,
-            'net': false,
-            'tls': false,
         };
     }
     config.module.rules.push({
