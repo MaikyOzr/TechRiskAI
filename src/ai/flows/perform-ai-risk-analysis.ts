@@ -1,4 +1,3 @@
-'use server';
 /**
  * @fileOverview This file defines a Genkit flow for performing AI-powered risk analysis on technical input.
  *
@@ -6,8 +5,8 @@
  * - PerformAIRiskAnalysisInput - The input type for the performAIRiskAnalysis function.
  * - PerformAIRiskAnalysisOutput - The return type for the performAIRiskAnalysis function.
  */
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+const {ai} = require('@/ai/genkit');
+const {z} = require('genkit');
 
 const PerformAIRiskAnalysisInputSchema = z.object({
   technicalContext: z
