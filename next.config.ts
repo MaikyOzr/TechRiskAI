@@ -32,12 +32,27 @@ const nextConfig: NextConfig = {
   },
   // This is required for Electron to work with Next.js's static export.
   output: 'export',
-  // Disable generateStaticParams for dynamic routes
-  // This allows client-side rendering for dynamic routes in a static export
-  dynamic: 'error',
-  generateStaticParams: async () => {
-    return [];
-  },
+  // This is a workaround to prevent Next.js from trying to generate static params
+  // for dynamic routes, which is not possible for our use case.
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+        config.resolve.fallback = {
+            ...config.resolve.fallback,
+            'fs/promises': false,
+            fs: false,
+        };
+    }
+    config.module.rules.push({
+        test: /report\/\[id\]\/page\.tsx$/,
+        loader: 'string-replace-loader',
+        options: {
+            search: 'export const dynamicParams = true;',
+            replace: 'export const dynamicParams = false;\nexport const generateStaticParams = () => [];',
+            flags: 'g'
+        }
+    });
+    return config;
+  }
 };
 
 export default nextConfig;
