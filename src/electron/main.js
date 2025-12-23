@@ -3,9 +3,9 @@ const path = require('path');
 
 // Import the compiled AI flows using absolute paths.
 // Note: We are importing from the 'out' directory which is the result of the build process.
-require(path.join(__dirname, '../out/ai/flows/perform-ai-risk-analysis.js'));
-require(path.join(__dirname, '../out/ai/flows/generate-executive-summary.js'));
-require(path.join(__dirname, '../out/ai/flows/generate-actionable-recommendations.js'));
+require(path.join(__dirname, '../../out/ai/flows/perform-ai-risk-analysis.js'));
+require(path.join(__dirname, '../../out/ai/flows/generate-executive-summary.js'));
+require(path.join(__dirname, '../../out/ai/flows/generate-actionable-recommendations.js'));
 
 
 async function createWindow() {
@@ -47,7 +47,7 @@ app.whenReady().then(() => {
     try {
       // Since we required the flows at the top, the 'performAIRiskAnalysisFlow' is available.
       // We need to dynamically get the flow function.
-      const { performAIRiskAnalysis } = require(path.join(__dirname, '../out/ai/flows/perform-ai-risk-analysis.js'));
+      const { performAIRiskAnalysis } = require(path.join(__dirname, '../../out/ai/flows/perform-ai-risk-analysis.js'));
       const result = await performAIRiskAnalysis(args);
       return { success: true, data: result };
     } catch (error) {
