@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
+        protocol: 'https' as const,
         hostname: 'picsum.photos',
         port: '',
         pathname: '/**',
@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
         };
     }
     config.module.rules.push({
-        test: /report\/\[id\]\/page\.tsx$/,
+        test: /report\/page\.tsx$/,
         loader: 'string-replace-loader',
         options: {
             search: 'export const dynamicParams = true;',
