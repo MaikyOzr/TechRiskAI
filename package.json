@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "AI-powered technical risk analysis tool",
   "author": "TechRiskAI",
-  "private": true,
+  "license": "AGPL-3.0",
+  "private": false,
   "main": "out/electron/main.js",
   "homepage": "./",
   "scripts": {
