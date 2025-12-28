@@ -1,4 +1,16 @@
-// THIS FILE IS INTENTIONALLY LEFT BLANK AND IS NOT USED.
-// IT IS A PLACEHOLDER TO PREVENT BUILD ERRORS FROM MISSING FILES.
-// We are using ts-node for development and a separate build step for production.
-{}
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "commonjs",
+        "outDir": "out/electron",
+        "rootDir": "src/electron",
+        "allowJs": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "src/electron/**/*"
+    ]
+}

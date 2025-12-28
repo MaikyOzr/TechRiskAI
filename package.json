@@ -9,7 +9,7 @@
     "build:next": "cross-env NODE_ENV=production next build",
     "build:electron": "tsc --project tsconfig.electron.json",
     "build:ai": "tsc --project tsconfig.server.json",
-    "build": "npm run build:ai && npm run build:electron && npm run build:next",
+    "build": "npm run build:ai && npm run build:next && npm run build:electron",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",

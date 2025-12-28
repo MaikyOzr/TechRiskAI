@@ -1,4 +1,4 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -36,22 +37,22 @@ const nextConfig: NextConfig = {
   // server-side modules on the client.
   webpack: (config, { isServer }) => {
     if (!isServer) {
-        config.resolve.fallback = {
-            ...config.resolve.fallback,
-            'async_hooks': false,
-            'child_process': false,
-            'dgram': false,
-            'dns': false,
-            'fs': false,
-            'net': false,
-            'tls': false,
-            'http2': false,
-            'os': false,
-            'path': false,
-            'stream': false,
-            'zlib': false,
-            'crypto': false,
-        };
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        'async_hooks': false,
+        'child_process': false,
+        'dgram': false,
+        'dns': false,
+        'fs': false,
+        'net': false,
+        'tls': false,
+        'http2': false,
+        'os': false,
+        'path': false,
+        'stream': false,
+        'zlib': false,
+        'crypto': false,
+      };
     }
     return config;
   }
