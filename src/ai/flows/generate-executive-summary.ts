@@ -6,7 +6,7 @@
  * - GenerateExecutiveSummaryOutput - The return type for the generateExecutiveSummary function.
  */
 import { z } from 'zod';
-import { ai } from '@/ai/genkit';
+import { ai } from '../genkit';
 
 const GenerateExecutiveSummaryInputSchema = z.object({
   riskAnalysis: z
@@ -36,8 +36,8 @@ export async function generateExecutiveSummary(
 
 const prompt = ai.definePrompt({
   name: 'generateExecutiveSummaryPrompt',
-  input: {schema: GenerateExecutiveSummaryInputSchema},
-  output: {schema: GenerateExecutiveSummaryOutputSchema},
+  input: { schema: GenerateExecutiveSummaryInputSchema },
+  output: { schema: GenerateExecutiveSummaryOutputSchema },
   prompt: `You are an AI assistant that specializes in creating executive summaries for technical risk analysis reports.
 
   Given the following risk analysis, create a concise, non-technical executive summary that highlights the overall system health, risk level, and business impact.
@@ -54,7 +54,7 @@ const generateExecutiveSummaryFlow = ai.defineFlow(
     outputSchema: GenerateExecutiveSummaryOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const { output } = await prompt(input);
     return output!;
   }
 );

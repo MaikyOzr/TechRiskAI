@@ -6,7 +6,7 @@
  * - GenerateActionableRecommendationsOutput - The return type for the generateActionableRecommendations function.
  */
 import { z } from 'zod';
-import { ai } from '@/ai/genkit';
+import { ai } from '../genkit';
 
 const GenerateActionableRecommendationsInputSchema = z.object({
   riskReport: z.string().describe('The structured risk report from the AI analysis.'),
@@ -32,8 +32,8 @@ export async function generateActionableRecommendations(input: GenerateActionabl
 
 const prompt = ai.definePrompt({
   name: 'generateActionableRecommendationsPrompt',
-  input: {schema: GenerateActionableRecommendationsInputSchema},
-  output: {schema: GenerateActionableRecommendationsOutputSchema},
+  input: { schema: GenerateActionableRecommendationsInputSchema },
+  output: { schema: GenerateActionableRecommendationsOutputSchema },
   prompt: `You are a CTO expert in identifying actionable recommendations from risk assessments.
   Based on the following risk report, provide a list of actionable recommendations.
   Each recommendation should include a clear description, an estimated effort (low, medium, or high), and the expected business benefit (stability, cost reduction, scalability).
@@ -49,7 +49,7 @@ const generateActionableRecommendationsFlow = ai.defineFlow(
     outputSchema: GenerateActionableRecommendationsOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const { output } = await prompt(input);
     return output!;
   }
 );

@@ -6,7 +6,7 @@
  * - PerformAIRiskAnalysisOutput - The return type for the performAIRiskAnalysis function.
  */
 import { z } from 'zod';
-import { ai } from '@/ai/genkit';
+import { ai } from '../genkit';
 
 const PerformAIRiskAnalysisInputSchema = z.object({
   technicalContext: z
@@ -49,8 +49,8 @@ export async function performAIRiskAnalysis(
 
 const prompt = ai.definePrompt({
   name: 'performAIRiskAnalysisPrompt',
-  input: {schema: PerformAIRiskAnalysisInputSchema},
-  output: {schema: PerformAIRiskAnalysisOutputSchema},
+  input: { schema: PerformAIRiskAnalysisInputSchema },
+  output: { schema: PerformAIRiskAnalysisOutputSchema },
   prompt: `You are an AI-powered risk analysis tool. Analyze the provided technical context and generate a structured report of technical risks.
 
 Technical Context: {{{technicalContext}}}
@@ -67,7 +67,7 @@ const performAIRiskAnalysisFlow = ai.defineFlow(
     outputSchema: PerformAIRiskAnalysisOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const { output } = await prompt(input);
     return output!;
   }
 );

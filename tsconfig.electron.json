@@ -2,8 +2,8 @@
     "compilerOptions": {
         "target": "es2020",
         "module": "commonjs",
-        "outDir": "out/electron",
-        "rootDir": "src/electron",
+        "outDir": "out",
+        "rootDir": "src",
         "allowJs": true,
         "strict": true,
         "esModuleInterop": true,
@@ -11,6 +11,7 @@
         "forceConsistentCasingInFileNames": true
     },
     "include": [
-        "src/electron/**/*"
+        "src/electron/**/*",
+        "src/ai/**/*"
     ]
 }
