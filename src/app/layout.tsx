@@ -1,19 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/header';
 
-const fontBody = Inter({
-  subsets: ['latin'],
-  variable: '--font-body',
-});
-
-const fontHeadline = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-headline',
-});
+// Placeholder for missing font variables
+const fontBody = { variable: 'font-sans' };
+const fontHeadline = { variable: 'font-sans' };
 
 export const metadata: Metadata = {
   title: 'TechRisk: AI-Powered Risk Analysis',
