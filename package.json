@@ -1,6 +1,6 @@
 {
   "name": "techrisk-electron",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "AI-powered technical risk analysis tool",
   "author": "TechRiskAI",
   "license": "AGPL-3.0",
@@ -103,8 +103,10 @@
       "buildResources": "assets",
       "output": "dist"
     },
+    "icon": "assets/icon.png",
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "assets/icon.png"
     },
     "mac": {
       "target": "dmg"
