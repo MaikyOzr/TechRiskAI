@@ -1,8 +1,23 @@
-import 'dotenv/config';
 import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron';
 import fs from 'fs';
-import Stripe from 'stripe';
 import path from 'path';
+import dotenv from 'dotenv';
+
+// Load .env from the app directory in production, or root in dev
+const dotEnvPath = app.isPackaged
+  ? path.join(process.resourcesPath, '.env') // If you copied it to resources
+  : path.join(process.cwd(), '.env');
+
+if (fs.existsSync(dotEnvPath)) {
+  dotenv.config({ path: dotEnvPath });
+} else {
+  // Fallback to app path for nsis installs where it might be inside the asar or next to it
+  const fallbackPath = path.join(app.getAppPath(), '.env');
+  if (fs.existsSync(fallbackPath)) {
+    dotenv.config({ path: fallbackPath });
+  }
+}
+import Stripe from 'stripe';
 import serve from 'electron-serve';
 import { performAIRiskAnalysis } from '../ai/flows/perform-ai-risk-analysis';
 import { strategyConsultationFlow } from '../ai/flows/consult-risk';
@@ -46,6 +61,10 @@ app.whenReady().then(() => {
   // Handler for AI Analysis
   ipcMain.handle('perform-analysis', async (event, input: { technicalContext: string; projectName?: string }) => {
     try {
+      const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY;
+      if (!apiKey) {
+        throw new Error("GEMINI_API_KEY is missing. Please add it to your .env file.");
+      }
       console.log("Analyzing project:", input.projectName || 'Untitled');
       const result = await performAIRiskAnalysis(input);
       return { success: true, data: result, projectName: input.projectName };
