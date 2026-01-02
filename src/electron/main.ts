@@ -44,6 +44,8 @@ async function createWindow() {
     },
   });
 
+  mainWindow.removeMenu();
+
   const isDev = !app.isPackaged;
 
   if (isDev) {

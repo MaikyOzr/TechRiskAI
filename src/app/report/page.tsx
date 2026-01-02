@@ -542,6 +542,15 @@ function CodeRemediationModal({
                     Copy Code
                   </Button>
                 </div>
+                <div className="rounded-md bg-amber-500/10 border border-amber-500/20 p-3">
+                  <p className="text-xs text-amber-600 dark:text-amber-400 flex items-start gap-2">
+                    <span className="text-base">⚠️</span>
+                    <span className="leading-relaxed">
+                      <strong>Disclaimer:</strong> This code is generated as a <strong>suggestion and idea</strong> for fixing the issue, not a complete production-ready solution.
+                      Please review, test, and adapt it to your specific product context before implementation.
+                    </span>
+                  </p>
+                </div>
                 <pre className="p-4 rounded-lg bg-slate-950 text-slate-50 font-mono text-xs overflow-x-auto border border-slate-800 break-all whitespace-pre-wrap">
                   <code>{data.fixCode}</code>
                 </pre>
