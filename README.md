@@ -11,7 +11,7 @@
 - **Strategic Consulting:** Interactive AI assistant to discuss remediation strategies and "what-if" scenarios.
 - **Auto-Fix Generator:** One-click AI-powered remediation code for identified vulnerabilities.
 
-### 🛡️ Hardened Security (v0.7.1)
+### 🛡️ Hardened Security (v0.7.2)
 - **AES-GCM Encryption:** All local history and sensitive data are encrypted using **AES-256-GCM** via the Web Crypto API.
 - **Multi-Layer Sanitizer:** Automatically masks API keys (AWS, Google, Stripe) and detects **Prompt Injection** attempts before processing.
 - **Privacy First:** Data never leaves your machine unless explicitly sent to the AI model (Gemini), and even then, it is sanitized first.

@@ -38,7 +38,7 @@ export default function Header() {
               TechRisk
             </span>
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 font-mono opacity-70">
-              v0.7.1
+              v0.7.2
             </Badge>
           </Link>
         </div>

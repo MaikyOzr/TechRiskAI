@@ -1,6 +1,6 @@
 {
   "name": "techrisk-electron",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "AI-powered technical risk analysis tool",
   "author": "TechRiskAI",
   "license": "AGPL-3.0",
@@ -51,7 +51,7 @@
     "@radix-ui/react-toast": "^1.2.6",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@stripe/stripe-js": "^8.6.0",
-    "class-variance-authority": "^0.7.1",
+    "class-variance-authority": "^0.7.2",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dotenv": "^16.5.0",
