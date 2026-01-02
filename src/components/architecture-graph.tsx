@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import mermaid from 'mermaid';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Maximize2 } from 'lucide-react';
+import { Loader2, Maximize2, ZoomIn, ZoomOut, Minimize2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 mermaid.initialize({
     startOnLoad: false,
@@ -16,14 +17,14 @@ mermaid.initialize({
         secondaryColor: '#ef4444',
         tertiaryColor: '#1e293b',
         fontFamily: 'inherit',
-        fontSize: '14px',
+        fontSize: '18px',
     },
     flowchart: {
         htmlLabels: true,
         curve: 'basis',
-        padding: 15,
-        nodeSpacing: 50,
-        rankSpacing: 50,
+        padding: 30,
+        nodeSpacing: 80,
+        rankSpacing: 80,
     },
     securityLevel: 'loose',
 });
@@ -34,9 +35,16 @@ interface ArchitectureGraphProps {
 
 export function ArchitectureGraph({ code }: ArchitectureGraphProps) {
     const containerRef = useRef<HTMLDivElement>(null);
+    const svgRef = useRef<SVGSVGElement | null>(null);
     const [svg, setSvg] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+
+    // Zoom and Pan state
+    const [scale, setScale] = useState(1);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         async function renderGraph() {
@@ -61,8 +69,76 @@ export function ArchitectureGraph({ code }: ArchitectureGraphProps) {
         renderGraph();
     }, [code]);
 
+    // Update SVG ref when SVG content changes
+    useEffect(() => {
+        if (containerRef.current && svg) {
+            const svgElement = containerRef.current.querySelector('svg');
+            svgRef.current = svgElement;
+        }
+    }, [svg]);
+
+    // Prevent page scroll when zooming graph
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const handleWheelNative = (e: WheelEvent) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            const newScale = Math.min(Math.max(0.1, scale * delta), 5);
+            setScale(newScale);
+        };
+
+        container.addEventListener('wheel', handleWheelNative, { passive: false });
+        return () => {
+            container.removeEventListener('wheel', handleWheelNative);
+        };
+    }, [scale]);
+
+    // Zoom and Pan handlers
+    const handleWheel = (e: React.WheelEvent) => {
+        // This is now handled by native event listener above
+    };
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (e.button === 0) { // Left mouse button
+            setIsDragging(true);
+            setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+        }
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (isDragging) {
+            setPosition({
+                x: e.clientX - dragStart.x,
+                y: e.clientY - dragStart.y,
+            });
+        }
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    const handleMouseLeave = () => {
+        setIsDragging(false);
+    };
+
+    const handleZoomIn = () => {
+        setScale(prev => Math.min(prev * 1.2, 5));
+    };
+
+    const handleZoomOut = () => {
+        setScale(prev => Math.max(prev / 1.2, 0.1));
+    };
+
+    const handleResetZoom = () => {
+        setScale(1);
+        setPosition({ x: 0, y: 0 });
+    };
+
     return (
-        <Card className="overflow-hidden shadow-2xl border-primary/20 bg-card/50 backdrop-blur-sm">
+        <Card className="overflow-hidden shadow-2xl border-primary/20 bg-card/50 backdrop-blur-sm flex flex-col h-full">
             <CardHeader className="flex flex-row items-center justify-between border-b bg-muted/20 pb-4">
                 <CardTitle className="text-xl font-bold flex items-center gap-2 font-headline">
                     <Maximize2 className="h-5 w-5 text-primary" />
@@ -73,7 +149,7 @@ export function ArchitectureGraph({ code }: ArchitectureGraphProps) {
                     LIVE SCHEMA
                 </div>
             </CardHeader>
-            <CardContent className="relative flex min-h-[450px] items-center justify-center p-8">
+            <CardContent className="relative flex flex-1 h-full items-center justify-center p-4">
                 {loading && (
                     <div className="flex flex-col items-center gap-3 text-muted-foreground">
                         <Loader2 className="h-10 w-10 animate-spin text-primary/50" />
@@ -90,10 +166,61 @@ export function ArchitectureGraph({ code }: ArchitectureGraphProps) {
 
                 <div
                     ref={containerRef}
-                    className="w-full h-full flex justify-center mermaid-container transition-opacity duration-500"
-                    style={{ opacity: loading ? 0 : 1 }}
-                    dangerouslySetInnerHTML={{ __html: svg }}
-                />
+                    className="w-full flex-1 flex items-center justify-center mermaid-container transition-opacity duration-500 overflow-hidden min-h-[500px]"
+                    style={{
+                        opacity: loading ? 0 : 1,
+                        cursor: isDragging ? 'grabbing' : 'grab',
+                    }}
+                    onWheel={handleWheel}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    <div
+                        className="w-full h-full flex items-center justify-center"
+                        style={{
+                            transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+                            transformOrigin: 'center center',
+                            transition: isDragging ? 'none' : 'transform 0.1s ease-out',
+                        }}
+                        dangerouslySetInnerHTML={{ __html: svg }}
+                    />
+                </div>
+
+                {/* Zoom Controls */}
+                <div className="absolute top-4 right-4 flex flex-col gap-2">
+                    <Button
+                        size="sm"
+                        variant="secondary"
+                        className="h-8 w-8 p-0 shadow-lg"
+                        onClick={handleZoomIn}
+                        title="Zoom In"
+                    >
+                        <ZoomIn className="h-4 w-4" />
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="secondary"
+                        className="h-8 w-8 p-0 shadow-lg"
+                        onClick={handleZoomOut}
+                        title="Zoom Out"
+                    >
+                        <ZoomOut className="h-4 w-4" />
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="secondary"
+                        className="h-8 w-8 p-0 shadow-lg"
+                        onClick={handleResetZoom}
+                        title="Reset Zoom"
+                    >
+                        <Minimize2 className="h-4 w-4" />
+                    </Button>
+                    <div className="text-[10px] text-center text-muted-foreground bg-background/80 px-2 py-1 rounded border border-border/50">
+                        {Math.round(scale * 100)}%
+                    </div>
+                </div>
 
                 <div className="absolute bottom-4 right-6 flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-border/50 text-[9px] text-muted-foreground italic backdrop-blur-md">
                     <span className="h-2 w-2 rounded-full bg-red-500/20 border border-red-500/50" />
@@ -106,6 +233,10 @@ export function ArchitectureGraph({ code }: ArchitectureGraphProps) {
           height: auto;
           max-width: 100%;
           filter: drop-shadow(0 10px 25px rgba(0,0,0,0.3));
+          shape-rendering: geometricPrecision;
+          text-rendering: geometricPrecision;
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
         }
         .mermaid-container .node rect, 
         .mermaid-container .node circle, 
@@ -114,12 +245,18 @@ export function ArchitectureGraph({ code }: ArchitectureGraphProps) {
           stroke-width: 1.5px !important;
           rx: 8px !important;
           ry: 8px !important;
+          min-width: 150px !important;
         }
         .mermaid-container .node .label {
           font-weight: 600 !important;
-          font-size: 13px !important;
+          font-size: 17px !important;
           fill: #f8fafc !important;
           text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
+          white-space: normal !important;
+          word-wrap: break-word !important;
+          overflow-wrap: break-word !important;
+          max-width: 220px !important;
+          padding: 10px 14px !important;
         }
         .mermaid-container .edgePath .path {
           stroke: #3b82f6 !important;
