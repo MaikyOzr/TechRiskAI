@@ -5,21 +5,17 @@ A local-first desktop application designed for assessing technical and security 
 ## Overview
 
 This application provides a comprehensive framework for identifying, analyzing, and managing technical and security risks in your infrastructure and systems. All data remains local on your machine, ensuring complete privacy and control over sensitive security information.
-<img width="903" height="851" alt="image" src="https://github.com/user-attachments/assets/7e0fb229-5655-4d1c-aeeb-a967e54ce5f2" /><img width="1919" height="1008" alt="image" src="https://github.com/user-attachments/assets/6d73771a-b514-4bd5-8627-094b07453334" />
-<img width="1919" height="1027" alt="image" src="https://github.com/user-attachments/assets/32463433-de06-4f3d-b2a2-052db03ad023" />
-<img width="1919" height="1021" alt="image" src="https://github.com/user-attachments/assets/cbb7c913-fd09-4002-92ec-91811b882c6d" />
-<img width="1919" height="1008" alt="image" src="https://github.com/user-attachments/assets/abcfbd89-fd23-46bb-bee0-b31cb097f087" />
-<img width="1413" height="562" alt="image" src="https://github.com/user-attachments/assets/92fbb094-2cea-41c4-80da-5c598ee1d55e" />
-<img width="1832" height="906" alt="image" src="https://github.com/user-attachments/assets/a2f29e32-f12b-4607-8584-941195e2c62f" />
-<img width="1838" height="675" alt="image" src="https://github.com/user-attachments/assets/3c7103e3-241c-4a57-9f88-3ed1660918df" />
-<img width="1912" height="874" alt="image" src="https://github.com/user-attachments/assets/7ca5f256-4a25-4269-8e12-894ea7d4a175" />
-<img width="1836" height="939" alt="image" src="https://github.com/user-attachments/assets/abbd1f65-c10d-4a73-a9f2-b4c6d5921f9e" />
-<img width="1871" height="914" alt="image" src="https://github.com/user-attachments/assets/14ba231d-134d-43ab-bca1-525985c2a8ae" />
-<img width="1736" height="446" alt="image" src="https://github.com/user-attachments/assets/d9cddf88-49f4-44ad-baf3-11d9e3a73b53" />
-<img width="1915" height="842" alt="image" src="https://github.com/user-attachments/assets/7545ee78-4f0d-4b8c-9585-d0feb3c2fc26" />
-<img width="1870" height="509" alt="image" src="https://github.com/user-attachments/assets/0cc3ee54-81fa-46cd-844d-b2cba13a4677" />
-<img width="1869" height="373" alt="image" src="https://github.com/user-attachments/assets/bb5fd382-0a84-44f2-97e6-00898e42fe40" />
-<img width="903" height="851" alt="image" src="https://github.com/user-attachments/assets/9fc748d9-46a4-4641-82fa-76c1200707de" />
+<img width="1918" height="983" alt="image" src="https://github.com/user-attachments/assets/7d4fe740-be82-47ae-8e8b-dac5cd9ec387" />
+<img width="1337" height="583" alt="image" src="https://github.com/user-attachments/assets/3170a094-db16-45d7-9a60-d86718f26d32" />
+<img width="1608" height="847" alt="image" src="https://github.com/user-attachments/assets/a20dff1d-5bab-4753-bf96-9b25b40d232c" />
+<img width="1844" height="911" alt="image" src="https://github.com/user-attachments/assets/9700fa6e-8d37-45e1-8c45-49cf6181760c" />
+<img width="1205" height="839" alt="image" src="https://github.com/user-attachments/assets/aa0330c1-7152-4837-8599-a72c67b793bb" />
+<img width="1471" height="898" alt="image" src="https://github.com/user-attachments/assets/e8e08553-905c-41a3-a954-79c042ae6875" />
+<img width="1792" height="634" alt="image" src="https://github.com/user-attachments/assets/d868696b-dee4-49f1-b685-36879a02fd86" />
+<img width="1913" height="856" alt="image" src="https://github.com/user-attachments/assets/f8e59f56-a9d9-43a4-b0d1-432b36252af0" />
+<img width="1906" height="850" alt="image" src="https://github.com/user-attachments/assets/e5bae549-08cf-45ee-be31-f643dc717ae1" />
+<img width="670" height="834" alt="image" src="https://github.com/user-attachments/assets/f31e72d6-2f3f-4014-a9f3-a9bf6cc18dee" />
+
 
 
 ## Key Features
