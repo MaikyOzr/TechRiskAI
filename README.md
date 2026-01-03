@@ -1,10 +1,11 @@
-<img width="903" height="851" alt="image" src="https://github.com/user-attachments/assets/7e0fb229-5655-4d1c-aeeb-a967e54ce5f2" /><img width="1919" height="1008" alt="image" src="https://github.com/user-attachments/assets/6d73771a-b514-4bd5-8627-094b07453334" /># Risk Assessment Desktop Application
+# Risk Assessment Desktop Application
 
 A local-first desktop application designed for assessing technical and security risks in complex systems. Empowers technical leaders, security auditors, and engineers to perform rapid, evidence-based risk analysis without relying on slow external audits or exposing sensitive data to the cloud.
 
 ## Overview
 
 This application provides a comprehensive framework for identifying, analyzing, and managing technical and security risks in your infrastructure and systems. All data remains local on your machine, ensuring complete privacy and control over sensitive security information.
+<img width="903" height="851" alt="image" src="https://github.com/user-attachments/assets/7e0fb229-5655-4d1c-aeeb-a967e54ce5f2" /><img width="1919" height="1008" alt="image" src="https://github.com/user-attachments/assets/6d73771a-b514-4bd5-8627-094b07453334" />
 <img width="1919" height="1027" alt="image" src="https://github.com/user-attachments/assets/32463433-de06-4f3d-b2a2-052db03ad023" />
 <img width="1919" height="1021" alt="image" src="https://github.com/user-attachments/assets/cbb7c913-fd09-4002-92ec-91811b882c6d" />
 <img width="1919" height="1008" alt="image" src="https://github.com/user-attachments/assets/abcfbd89-fd23-46bb-bee0-b31cb097f087" />
